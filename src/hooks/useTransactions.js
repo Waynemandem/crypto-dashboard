@@ -7,7 +7,10 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useWallet } from '../context/WalletContext'
 
-const ETHERSCAN_BASE = 'https://api.etherscan.io/api'
+const ETHERSCAN_BASE = 'https://api.etherscan.io/v2/api'
+
+
+
 
 export function useTransactions() {
   const { address } = useWallet()
@@ -66,3 +69,4 @@ export function useTransactions() {
 
   return { transactions, loading, error }
 }
+

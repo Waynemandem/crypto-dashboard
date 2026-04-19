@@ -6,7 +6,7 @@ import React, { useState, useMemo } from 'react'
 import TransactionRow from '../components/dashboard/TransactionRow'
 import ConnectPrompt from '../components/wallet/ConnectPrompt'
 import { useWallet } from '../context/WalletContext'
-import { useTransactions } from '../hooks/useTransaction'
+import { useTransactions } from '../hooks/useTransactions'
 
 const FILTERS = ['All', 'Sent', 'Received', 'Failed']
 
