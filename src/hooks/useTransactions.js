@@ -1,16 +1,8 @@
-/**
- * useTransactions
- * Fetches the last 20 normal Ethereum transactions for the connected wallet
- * using the Etherscan API. Falls back gracefully if the API key is missing.
- */
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useWallet } from '../context/WalletContext'
 
 const ETHERSCAN_BASE = 'https://api.etherscan.io/v2/api'
-
-
-
 
 export function useTransactions() {
   const { address } = useWallet()
@@ -32,10 +24,11 @@ export function useTransactions() {
       setError(null)
 
       try {
-        const apiKey = import.meta.env.VITE_ETHERSCAN_API_KEY || 'YourApiKeyToken'
+        const apiKey = import.meta.env.VITE_ETHERSCAN_API_KEY
 
         const { data } = await axios.get(ETHERSCAN_BASE, {
           params: {
+            chainid:    1,
             module:     'account',
             action:     'txlist',
             address,
@@ -52,7 +45,6 @@ export function useTransactions() {
           if (data.status === '1') {
             setTransactions(data.result)
           } else {
-            // API returned an error message (e.g., rate limit)
             setError(data.message || 'Etherscan API error')
           }
         }
@@ -69,4 +61,3 @@ export function useTransactions() {
 
   return { transactions, loading, error }
 }
-
