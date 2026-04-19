@@ -4,7 +4,7 @@
  * Sidebar, Topbar, and page-level routing via simple state.
  */
 import React, { useState } from 'react'
-import { WalletProvider } from './context/WalletContext'
+import { WalletProvider } from './context/Walletcontext'
 import Sidebar from './components/layout/Sidebar'
 import Topbar from './components/layout/Topbar'
 import OverviewPage from './pages/OverviewPage'
