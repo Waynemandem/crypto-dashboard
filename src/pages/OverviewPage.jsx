@@ -11,7 +11,7 @@ import ConnectPrompt from '../components/wallet/ConnectPrompt'
 import { useWallet } from '../context/WalletContext'
 import { useBalance } from '../hooks/useBalance'
 import { usePrices } from '../hooks/usePrices'
-import { useTransactions } from '../hooks/useTransactions'
+import { useTransactions } from '../hooks/useTransaction'
 import { formatUSD, formatETH } from '../utils/format'
 
 export default function OverviewPage() {
