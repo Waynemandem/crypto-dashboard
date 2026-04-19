@@ -19,8 +19,9 @@ export default function Topbar({ activePage }) {
 
   return (
     <header className="flex items-center justify-between px-6 py-4
-                        border-b border-white/[0.06] bg-surface-900/60 backdrop-blur
-                        sticky top-0 z-30">
+                    border-b border-white/[0.06] bg-surface-900/60 backdrop-blur
+                    sticky top-0 z-30
+                    [html:not(.dark)_&]:bg-white/80 [html:not(.dark)_&]:border-slate-200">
       {/* Page title */}
       <div>
         <h1 className="font-display font-bold text-white text-lg leading-tight">{title}</h1>

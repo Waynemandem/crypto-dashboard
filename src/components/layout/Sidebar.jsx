@@ -21,7 +21,9 @@ export default function Sidebar({ activePage, setActivePage }) {
     <>
       {/* ── Desktop sidebar ── */}
       <aside className="hidden md:flex flex-col w-60 shrink-0 h-screen sticky top-0
-                         bg-surface-800 border-r border-white/[0.06] px-3 py-5">
+                   bg-surface-800 dark:bg-surface-800 border-r border-white/[0.06]
+                   dark:border-white/[0.06] px-3 py-5
+                   [html:not(.dark)_&]:bg-white [html:not(.dark)_&]:border-slate-200">
         {/* Logo */}
         <div className="flex items-center gap-2.5 px-3 mb-8">
           <div className="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center
@@ -58,8 +60,7 @@ export default function Sidebar({ activePage, setActivePage }) {
 
           {/* Connected wallet address */}
           {address && (
-            <div className="flex items-center justify-between bg-surface-700
-                            border border-white/[0.06] rounded-xl px-3 py-2 mt-1">
+            <div className="flex items-center justify-between bg-surface-900/60 dark:bg-surface-900/60 rounded-xl px-3 py-2 mt-1">
               <div>
                 <p className="stat-label text-[10px]">Connected</p>
                 <p className="font-mono text-xs text-slate-300">{shortAddress(address)}</p>

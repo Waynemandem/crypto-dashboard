@@ -1,21 +1,21 @@
-/**
- * TokenPricesPage
- * Live token price table with 24h change, auto-refreshes every 60s.
- */
-import React from 'react'   
-import TokenRow from '../components/dashboard/TokenRow'
+import React from 'react'
 import { usePrices } from '../hooks/usePrices'
+import { formatUSD, changeColor, changeArrow } from '../utils/format'
 
-// All coins we display (even without a connected wallet)
 const ALL_COINS = [
-  { id: 'ethereum',          symbol: 'ETH' },
-  { id: 'usd-coin',          symbol: 'USDC' },
-  { id: 'tether',            symbol: 'USDT' },
-  { id: 'dai',               symbol: 'DAI' },
-  { id: 'uniswap',           symbol: 'UNI' },
-  { id: 'wrapped-bitcoin',   symbol: 'WBTC' },
-  { id: 'matic-network',     symbol: 'MATIC' },
+  { id: 'ethereum',          symbol: 'ETH',  name: 'Ethereum'       },
+  { id: 'usd-coin',          symbol: 'USDC', name: 'USD Coin'       },
+  { id: 'tether',            symbol: 'USDT', name: 'Tether'         },
+  { id: 'dai',               symbol: 'DAI',  name: 'Dai'            },
+  { id: 'uniswap',           symbol: 'UNI',  name: 'Uniswap'        },
+  { id: 'wrapped-bitcoin',   symbol: 'WBTC', name: 'Wrapped Bitcoin' },
+  { id: 'matic-network',     symbol: 'MATIC',name: 'Polygon'        },
 ]
+
+const TOKEN_COLORS = {
+  ETH:  '#627eea', USDC: '#2775ca', USDT: '#26a17b',
+  DAI:  '#f5ac37', UNI:  '#ff007a', WBTC: '#f7931a', MATIC: '#8247e5',
+}
 
 export default function TokenPricesPage() {
   const { prices, loading, error, refetch } = usePrices()
@@ -37,8 +37,9 @@ export default function TokenPricesPage() {
         </button>
       </div>
 
-      {/* Table header */}
-      <div className="card">
+      {/* Table */}
+      <div className="card overflow-hidden">
+        {/* Table header */}
         <div className="grid grid-cols-3 px-5 py-3 border-b border-white/[0.06]">
           <span className="stat-label text-[10px]">Asset</span>
           <span className="stat-label text-[10px] text-right">Price (USD)</span>
@@ -46,9 +47,7 @@ export default function TokenPricesPage() {
         </div>
 
         {error ? (
-          <div className="p-10 text-center text-slate-500 text-sm">
-            {error}
-          </div>
+          <div className="p-10 text-center text-slate-500 text-sm">{error}</div>
         ) : loading && Object.keys(prices).length === 0 ? (
           <div className="p-4 space-y-2">
             {[...Array(7)].map((_, i) => (
@@ -56,31 +55,46 @@ export default function TokenPricesPage() {
             ))}
           </div>
         ) : (
-          <div className="p-2">
-            {ALL_COINS.map(coin => (
-              <div key={coin.id} className="grid grid-cols-3 items-center
-                                            hover:bg-white/[0.03] rounded-xl transition-colors px-2">
-                <div className="col-span-1">
-                  <TokenRow
-                    coinId={coin.id}
-                    priceData={prices[coin.id]}
-                  />
+          <div className="divide-y divide-white/[0.04]">
+            {ALL_COINS.map(coin => {
+              const price  = prices[coin.id]?.usd
+              const change = prices[coin.id]?.usd_24h_change
+              const color  = TOKEN_COLORS[coin.symbol] || '#64748b'
+
+              return (
+                <div key={coin.id}
+                  className="grid grid-cols-3 items-center px-5 py-4
+                             hover:bg-white/[0.03] transition-colors">
+
+                  {/* Asset name */}
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center
+                                    text-xs font-bold shrink-0"
+                      style={{ backgroundColor: color + '22', border: `1px solid ${color}44` }}>
+                      <span style={{ color }}>{coin.symbol.slice(0,2)}</span>
+                    </div>
+                    <div>
+                      <p className="font-display font-semibold text-sm text-white">
+                        {coin.symbol}
+                      </p>
+                      <p className="text-slate-500 text-xs">{coin.name}</p>
+                    </div>
+                  </div>
+
+                  {/* Price */}
+                  <div className="text-right font-mono text-sm text-white">
+                    {price != null ? formatUSD(price) : '—'}
+                  </div>
+
+                  {/* 24h change */}
+                  <div className={`text-right font-mono text-sm font-medium ${changeColor(change)}`}>
+                    {change != null
+                      ? `${changeArrow(change)} ${Math.abs(change).toFixed(2)}%`
+                      : '—'}
+                  </div>
                 </div>
-                {/* Extended columns for price + change separately */}
-                <div className="text-right font-mono text-sm text-white pr-4">
-                  {prices[coin.id]?.usd != null
-                    ? `$${prices[coin.id].usd.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 4 })}`
-                    : '—'}
-                </div>
-                <div className={`text-right font-mono text-sm pr-2
-                                 ${(prices[coin.id]?.usd_24h_change ?? 0) >= 0
-                                   ? 'text-emerald-400' : 'text-red-400'}`}>
-                  {prices[coin.id]?.usd_24h_change != null
-                    ? `${prices[coin.id].usd_24h_change >= 0 ? '+' : ''}${prices[coin.id].usd_24h_change.toFixed(2)}%`
-                    : '—'}
-                </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         )}
       </div>
