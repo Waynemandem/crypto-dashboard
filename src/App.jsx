@@ -9,7 +9,7 @@ import Sidebar from './components/layout/Sidebar'
 import Topbar from './components/layout/Topbar'
 import OverviewPage from './pages/OverviewPage'
 import PortfolioPage from './pages/PortfolioPage'
-import TransactionsPage from './pages/TransactionPage'
+import TransactionPage from './pages/TransactionPage'
 import TokenPricesPage from './pages/TokenPricesPage'
 
 // Map page IDs to their components
