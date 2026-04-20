@@ -1,19 +1,21 @@
 # CryptoLens — Crypto Portfolio Dashboard
 
-A modern, dark-mode crypto dashboard built with **React (Vite)**, **Tailwind CSS**, **ethers.js**, and **Recharts**.
+A modern, full-stack crypto portfolio dashboard built with **React**, **Vite**, **Tailwind CSS**, **ethers.js**, and **Recharts**.
+
+🔗 **Live Demo:** https://crypto-dashboard-pi-wheat.vercel.app/
 
 ---
 
 ## Features
 
-- 🔌 **MetaMask wallet connection** via ethers.js v6
-- 💰 **ETH + ERC-20 balances** (USDC, USDT, DAI, UNI, WBTC, MATIC)
-- 📊 **Interactive price chart** (7d / 30d / 90d) with Recharts AreaChart
-- 🥧 **Allocation donut chart** showing portfolio breakdown
-- 💵 **Portfolio total in USD** with live prices from CoinGecko
-- 🔄 **Transaction history** from Etherscan API (with filter tabs)
-- 🌙 **Dark / light mode** toggle
-- 📱 **Fully responsive** — sidebar on desktop, bottom nav on mobile
+- 🔌 **MetaMask Wallet Connection** — connect with one click on desktop, deep-link support on mobile
+- 💰 **Live ETH + ERC-20 Balances** — USDC, USDT, DAI, UNI, WBTC, MATIC
+- 📈 **Real-Time Price Charts** — 7D / 30D / 90D powered by CoinGecko
+- 🥧 **Portfolio Allocation Chart** — donut chart showing asset breakdown
+- 💵 **Total Portfolio Value in USD** — live calculation across all assets
+- 📜 **Transaction History** — full on-chain history via Etherscan API
+- 🌙 **Dark / Light Mode** — smooth toggle, defaults to dark
+- 📱 **Fully Responsive** — sidebar on desktop, bottom nav on mobile
 
 ---
 
@@ -21,40 +23,39 @@ A modern, dark-mode crypto dashboard built with **React (Vite)**, **Tailwind CSS
 
 ```
 crypto-dashboard/
-├── public/
 ├── src/
 │   ├── components/
 │   │   ├── charts/
-│   │   │   ├── AllocationChart.jsx   # Donut chart (Recharts)
-│   │   │   └── PortfolioChart.jsx    # Area chart (Recharts)
+│   │   │   ├── AllocationChart.jsx     # Donut chart (Recharts)
+│   │   │   └── PortfolioChart.jsx      # Area chart (Recharts)
 │   │   ├── dashboard/
-│   │   │   ├── StatCard.jsx          # Metric card
-│   │   │   ├── TokenRow.jsx          # Token table row
-│   │   │   └── TransactionRow.jsx    # Transaction list row
+│   │   │   ├── StatCard.jsx            # Metric card component
+│   │   │   ├── TokenRow.jsx            # Token table row
+│   │   │   └── TransactionRow.jsx      # Transaction list row
 │   │   ├── layout/
-│   │   │   ├── Sidebar.jsx           # Nav sidebar / mobile bottom bar
-│   │   │   └── Topbar.jsx            # Page header + connect button
+│   │   │   ├── Sidebar.jsx             # Desktop sidebar + mobile bottom nav
+│   │   │   └── Topbar.jsx              # Page header + connect button
 │   │   └── wallet/
-│   │       └── ConnectPrompt.jsx     # Wallet connection CTA
+│   │       └── ConnectPrompt.jsx       # Wallet connection screen
 │   ├── context/
-│   │   └── WalletContext.jsx         # Global wallet state (Context + Provider)
+│   │   └── WalletContext.jsx           # Global wallet state
 │   ├── hooks/
-│   │   ├── useBalance.js             # ETH + ERC-20 balances
-│   │   ├── usePrices.js              # CoinGecko live prices
-│   │   ├── usePriceHistory.js        # CoinGecko price history (chart data)
-│   │   └── useTransactions.js        # Etherscan transaction history
+│   │   ├── useBalance.js               # ETH + ERC-20 balances
+│   │   ├── usePrices.js                # Live CoinGecko prices
+│   │   ├── usePriceHistory.js          # Chart price history
+│   │   └── useTransactions.js          # Etherscan transaction history
 │   ├── pages/
-│   │   ├── OverviewPage.jsx          # Dashboard home
-│   │   ├── PortfolioPage.jsx         # Full portfolio breakdown
-│   │   ├── TransactionsPage.jsx      # Transaction history
-│   │   └── TokenPricesPage.jsx       # Live market prices
+│   │   ├── OverviewPage.jsx            # Dashboard home
+│   │   ├── PortfolioPage.jsx           # Portfolio breakdown
+│   │   ├── TransactionPage.jsx         # Transaction history
+│   │   └── TokenPricesPage.jsx         # Live market prices
 │   ├── utils/
-│   │   └── format.js                 # Currency / address / date formatters
+│   │   └── format.js                   # Formatting helpers
 │   ├── styles/
-│   │   └── index.css                 # Tailwind base + custom component classes
-│   ├── App.jsx                       # Root component + page routing
-│   └── main.jsx                      # React entry point
-├── .env.example                      # Environment variable template
+│   │   └── index.css                   # Tailwind + custom styles
+│   ├── App.jsx                         # Root component
+│   └── main.jsx                        # Entry point
+├── .env.example                        # Environment variable template
 ├── index.html
 ├── package.json
 ├── tailwind.config.js
@@ -65,11 +66,9 @@ crypto-dashboard/
 
 ## Quick Start
 
-### 1. Clone and install
+### 1. Install dependencies
 
 ```bash
-git clone <your-repo>
-cd crypto-dashboard
 npm install
 ```
 
@@ -79,69 +78,131 @@ npm install
 cp .env.example .env
 ```
 
-Edit `.env`:
+Open `.env` and add your API keys:
 
 ```env
-# Required for transaction history (free at https://etherscan.io/myapikey)
 VITE_ETHERSCAN_API_KEY=your_etherscan_api_key
-
-# Optional — CoinGecko public API works without a key (rate-limited)
-VITE_COINGECKO_API_KEY=your_coingecko_key
-
-# Optional — custom RPC (Alchemy/Infura). Falls back to MetaMask's provider.
-VITE_RPC_URL=https://eth-mainnet.g.alchemy.com/v2/your_key
+VITE_COINGECKO_API_KEY=your_coingecko_api_key
 ```
 
-### 3. Run the dev server
+### 3. Run the development server
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173).
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ### 4. Connect MetaMask
 
-- Make sure the [MetaMask](https://metamask.io) browser extension is installed.
-- Click **Connect Wallet** in the top-right.
-- Approve the connection in MetaMask.
+- Install [MetaMask](https://metamask.io) browser extension
+- Click **Connect Wallet** in the top right
+- Approve the connection in MetaMask
 
 ---
 
-## Build for production
+## Getting API Keys
+
+### Etherscan (Free)
+1. Sign up at [etherscan.io](https://etherscan.io/register)
+2. Go to [etherscan.io/myapikey](https://etherscan.io/myapikey)
+3. Click **Add** → create a key → copy it
+
+Free tier: **5 requests/second, 100k requests/day**
+
+### CoinGecko (Free)
+1. Go to [coingecko.com/en/api](https://www.coingecko.com/en/api)
+2. Sign up for the free **Demo plan**
+3. Copy your API key from the dashboard
+
+Free tier: **~30 requests/minute** — the app refreshes every 60s so you'll never hit the limit.
+
+---
+
+## Build for Production
 
 ```bash
 npm run build
-npm run preview
 ```
+
+The `dist` folder is ready to deploy anywhere.
+
+### Deploy to Vercel (Recommended)
+
+```bash
+npm install -g vercel
+vercel
+```
+
+Or connect your GitHub repo at [vercel.com/new](https://vercel.com/new) for automatic deployments.
+
+> ⚠️ Add your environment variables in the Vercel dashboard under **Project Settings → Environment Variables**
 
 ---
 
 ## Tech Stack
 
-| Library       | Purpose                            |
-|---------------|------------------------------------|
-| React 18      | UI framework                       |
-| Vite          | Build tool + dev server            |
-| Tailwind CSS  | Utility-first styling              |
-| ethers.js v6  | Ethereum provider + ERC-20 reads   |
-| Recharts      | AreaChart + PieChart               |
-| axios         | API requests (CoinGecko, Etherscan)|
+| Technology | Purpose |
+|---|---|
+| React 18 | UI framework |
+| Vite | Build tool + dev server |
+| Tailwind CSS | Utility-first styling |
+| ethers.js v6 | Ethereum provider + ERC-20 reads |
+| Recharts | Area chart + Pie chart |
+| axios | API requests |
+| CoinGecko API | Live token prices + price history |
+| Etherscan API v2 | Transaction history |
 
 ---
 
-## API Keys
+## Mobile Usage
 
-| Service    | Free Tier | URL |
-|------------|-----------|-----|
-| Etherscan  | 5 req/s   | https://etherscan.io/myapikey |
-| CoinGecko  | 10–30 req/min (no key needed for demo) | https://www.coingecko.com/en/api |
+MetaMask browser extension is not available on mobile. To use the dashboard on mobile:
+
+1. Install the **MetaMask mobile app** from the App Store or Play Store
+2. Open MetaMask → tap the **browser icon** at the bottom
+3. Navigate to the live URL
+4. Tap **Connect Wallet**
+
+Or tap **"Open in MetaMask App"** directly from the dashboard on mobile.
 
 ---
 
-## Extending the Dashboard
+## Customisation
 
-- **Add more tokens**: Edit the `TRACKED_TOKENS` array in `src/hooks/useBalance.js`.
-- **Add more chains**: Swap the Etherscan endpoint in `useTransactions.js` for Polygonscan, BSCscan, etc.
-- **Add wagmi**: Replace the custom `WalletContext` with `wagmi` + `viem` for multi-wallet support.
-- **Add React Router**: Replace the `useState` page router in `App.jsx` with `react-router-dom`.
+### Add more tokens
+Edit the `TRACKED_TOKENS` array in `src/hooks/useBalance.js`:
+
+```js
+const TRACKED_TOKENS = [
+  { address: '0x...', symbol: 'TOKEN', decimals: 18, coingeckoId: 'token-id' },
+  // add more here
+]
+```
+
+### Change the price refresh interval
+In `src/hooks/usePrices.js`, change `60_000` to any value in milliseconds:
+
+```js
+const interval = setInterval(fetchPrices, 60_000) // 60 seconds
+```
+
+### Add more chains
+Replace the Etherscan endpoint in `src/hooks/useTransactions.js`:
+- Polygon: `https://api.polygonscan.com/v2/api`
+- BSC: `https://api.bscscan.com/v2/api`
+- Arbitrum: `https://api.arbiscan.io/v2/api`
+
+---
+
+## License
+
+MIT — free to use, modify, and sell.
+
+---
+
+## Support
+
+Built by [@Waynemandem](https://github.com/Waynemandem)
+
+If you found this useful, consider leaving a ⭐ on GitHub!
