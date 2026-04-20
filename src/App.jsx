@@ -16,7 +16,7 @@ import TokenPricesPage from './pages/TokenPricesPage'
 const PAGES = {
   overview:     OverviewPage,
   portfolio:    PortfolioPage,
-  transactions: TransactionsPage,
+  transactions: TransactionPage,
   tokens:       TokenPricesPage,
 }
 
